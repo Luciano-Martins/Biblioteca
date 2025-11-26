@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Model;
 
 namespace Repositorio.Data
 {
-    public class AppDbContexto : DbContext
+    public class AppDbContexto : IdentityDbContext<ApplicationUser>
     {
 
         // DBSETs para as tabelas principais
@@ -26,6 +27,9 @@ namespace Repositorio.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            // 🔥 IMPORTANTE: adicionada a linha que faltava
+            base.OnModelCreating(modelBuilder);
             // -----------------------------------------------------
             // 1. Configuração da Tabela de Junção (LivroAutor - M-N)
             // -----------------------------------------------------

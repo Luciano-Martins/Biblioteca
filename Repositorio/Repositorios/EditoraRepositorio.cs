@@ -20,7 +20,9 @@ namespace Repositorio.Repositorios
 
         public async Task<IEnumerable<Editora>> GetAll()
         {
-            return await _contexto.Editoras.ToListAsync();
+            return await _contexto.Editoras
+                .OrderByDescending(a => a.EditoraId)
+                .ToListAsync();
         }
 
         public async Task<Editora?> GetById(int id)

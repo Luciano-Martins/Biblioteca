@@ -14,13 +14,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configurando serviço de Acesso ao banco. 
 
 builder.Services.AddDbContext<AppDbContexto>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Configurando o serviço do Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContexto>()
     .AddDefaultTokenProviders();
@@ -56,6 +57,8 @@ builder.Services.AddControllers()
             options.JsonSerializerOptions.ReferenceHandler =
                 System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         });
+
+
 // Adiciona o AutoMapper e escaneia a assembly atual para encontrar o MappingProfile
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // ou, que pode ser mais profundo e consequentemente mais lenta.
@@ -83,7 +86,7 @@ builder.Services.AddScoped<IAutorService, AutorService>();
 builder.Services.AddScoped<ILivroService, LivroService>();
 #endregion
 
-// resolvendo Cors
+// resolvendo de Cors
 builder.Services.AddCors();
 var app = builder.Build();
 
@@ -104,5 +107,6 @@ app.UseCors(cors => cors
                     .AllowAnyMethod()
                     .AllowAnyOrigin()
             );
+
 app.MapControllers();
 app.Run();

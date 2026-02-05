@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.DTOs;
+using Repositorio.Data;
 using Service.IService;
 using Service.IServices;
 
@@ -15,12 +17,13 @@ namespace Biblioteca.WebApi.Controllers
     public class LivroController : ControllerBase
     {
         private readonly ILivroService _service;
+        private readonly AppDbContexto _context;
 
         // Injeção de Dependência do Serviço
-        public LivroController(ILivroService service)
+        public LivroController(ILivroService service, AppDbContexto appDbContext)
         {
             _service = service;
-        }
+            _context = appDbContext;        }
 
         // -----------------------------------------------------------------
         // 1. GET (READ ALL) - Rota: GET api/Assunto
@@ -117,5 +120,6 @@ namespace Biblioteca.WebApi.Controllers
                 _ => StatusCode(500, new { message = "Ocorreu um erro interno na exclusão." })
             };
         }
+
     }
 }

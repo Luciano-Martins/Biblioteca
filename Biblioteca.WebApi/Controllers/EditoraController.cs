@@ -76,11 +76,9 @@ namespace Biblioteca.WebApi.Controllers
             {
                 return BadRequest("O ID na URL e o ID do corpo da requisição não correspondem.");
             }
-
             try
             {
                 var editoraAtualizado = await _service.Update(editora);
-
                 // Retorna 204 No Content para uma atualização bem-sucedida,
                 // ou 200 OK se preferir retornar a entidade atualizada (assuntoAtualizado).
                 return Ok(editoraAtualizado);

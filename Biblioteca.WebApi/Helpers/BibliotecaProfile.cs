@@ -42,11 +42,7 @@ namespace Biblioteca.WebApi.Helpers
                         // 1. Se LivroAutores for nulo, use uma coleção vazia de LivroAutor.
                         // 2. Chame .Select() em seguida para transformar a coleção de ligação
                         //    na coleção final de Autor.
-                        (src.LivroAutores ?? new List<LivroAutor>())
-                        .Select(la => la.Autor!) // Usando '!' para ignorar a nulidade do Autor dentro da ligação (CS8602)
-                        .ToList() // Certifique-se de que o resultado é uma lista
-                    )
-                );
+                        src.LivroAutores.Select(la => la.Autor)));
 
             // B. Mapeamento de Entrada (LivroDto -> Entidade Livro) - Para POST/PUT
 

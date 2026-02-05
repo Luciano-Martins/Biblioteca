@@ -19,15 +19,14 @@ namespace Repositorio.Repositorios
         }
         public async Task<IEnumerable<Livro>> GetAll()
         {
+           
             return await GetLivroQuery().ToListAsync();
         }
-
         public async Task<Livro?> GetById(int id)
         {
             var livro = await GetLivroQuery().FirstOrDefaultAsync(f => f.LivroId == id);
             return livro;
         }
-
         public async Task<Livro> Create(Livro livro)
         {
             _contexto.Livros.Add(livro);
@@ -40,16 +39,11 @@ namespace Repositorio.Repositorios
             await _contexto.SaveChangesAsync();
             return livro;
         }
-
         public async Task Delete(Livro livro)
         {
             _contexto.Livros.Remove(livro);
             await _contexto.SaveChangesAsync();
         }
-
-
-
-
         private IQueryable<Livro> GetLivroQuery()
         {
             return _contexto.Livros
@@ -66,7 +60,8 @@ namespace Repositorio.Repositorios
                 .Include(l => l.LivroAutores!)
                     // 4. ThenInclude para o objeto Autor
                     // O compilador pode reclamar se 'la.Autor' no LivroAutor.cs for 'Autor?'
-                    .ThenInclude(la => la.Autor!);
+                    .ThenInclude(la => la.Autor!)
+                    .OrderByDescending(id => id.LivroId);
         }
     }
 }
